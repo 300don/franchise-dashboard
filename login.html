@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로그인 · 프랜차이즈 관리</title>
+<title>로그인 · 삼백돈 돈가츠 프랜차이즈 관리</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -25,30 +25,23 @@
   /* Logo */
   .logo-area {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
   }
-  .logo-icon {
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, #00c4b4, #0095d9);
-    border-radius: 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .brand-logo {
     font-size: 32px;
-    margin-bottom: 14px;
-    box-shadow: 0 8px 24px rgba(0,196,180,0.35);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #ffffff, #dcdcdc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
   .logo-area h1 {
-    color: white;
-    font-size: 22px;
-    font-weight: 700;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: -0.5px;
-  }
-  .logo-area p {
-    color: rgba(255,255,255,0.5);
-    font-size: 13px;
-    margin-top: 6px;
   }
 
   /* Card */
@@ -57,10 +50,11 @@
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 20px;
-    padding: 36px 32px;
+    padding: 40px 32px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
   }
 
-  .form-group { margin-bottom: 18px; }
+  .form-group { margin-bottom: 20px; }
   .form-group label {
     display: block;
     font-size: 12px;
@@ -81,7 +75,7 @@
   }
   .form-group input {
     width: 100%;
-    padding: 13px 14px 13px 42px;
+    padding: 14px 14px 14px 42px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.15);
     border-radius: 12px;
@@ -110,7 +104,7 @@
 
   .btn-login {
     width: 100%;
-    padding: 15px;
+    padding: 16px;
     background: linear-gradient(135deg, #00c4b4, #0095d9);
     color: white;
     border: none;
@@ -119,34 +113,13 @@
     font-weight: 700;
     font-family: inherit;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 12px;
     transition: opacity 0.2s, transform 0.1s;
     letter-spacing: -0.3px;
+    box-shadow: 0 8px 20px rgba(0, 196, 180, 0.2);
   }
   .btn-login:hover { opacity: 0.9; }
   .btn-login:active { transform: scale(0.98); }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 20px 0;
-  }
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.12);
-  }
-  .divider span { color: rgba(255,255,255,0.35); font-size: 12px; }
-
-  .hint {
-    text-align: center;
-    color: rgba(255,255,255,0.3);
-    font-size: 12px;
-    margin-top: 20px;
-  }
-  .hint b { color: rgba(255,255,255,0.6); }
 
   /* Loading state */
   .btn-login.loading {
@@ -165,106 +138,4 @@
     margin-left: 8px;
     vertical-align: middle;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Shake animation */
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20% { transform: translateX(-8px); }
-    40% { transform: translateX(8px); }
-    60% { transform: translateX(-6px); }
-    80% { transform: translateX(6px); }
-  }
-  .shake { animation: shake 0.4s ease; }
-</style>
-</head>
-<body>
-
-<div class="login-wrap">
-  <div class="logo-area">
-    <div class="logo-icon">🛵</div>
-    <h1>프랜차이즈 관리 시스템</h1>
-    <p>매출 분석 · 직원 출퇴근 관리</p>
-  </div>
-
-  <div class="card" id="loginCard">
-    <div class="form-group">
-      <label>아이디</label>
-      <div class="input-wrap">
-        <span class="icon">👤</span>
-        <input type="text" id="username" placeholder="아이디를 입력하세요" autocomplete="username">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>비밀번호</label>
-      <div class="input-wrap">
-        <span class="icon">🔒</span>
-        <input type="password" id="password" placeholder="비밀번호를 입력하세요" autocomplete="current-password">
-      </div>
-    </div>
-
-    <div class="error-msg" id="errorMsg">아이디 또는 비밀번호가 올바르지 않습니다.</div>
-
-    <button class="btn-login" id="loginBtn" onclick="doLogin()">로그인</button>
-
-    <div class="divider"><span>테스트 계정</span></div>
-    <div class="hint">아이디 <b>admin</b> · 비밀번호 <b>1234</b></div>
-  </div>
-</div>
-
-<script>
-  // 테스트 계정 (실제 서비스 시 서버 인증으로 교체)
-  const ACCOUNTS = {
-    'admin': '1234',
-    'manager': '5678',
-  };
-
-  function doLogin() {
-    const id = document.getElementById('username').value.trim();
-    const pw = document.getElementById('password').value;
-    const btn = document.getElementById('loginBtn');
-    const err = document.getElementById('errorMsg');
-    const card = document.getElementById('loginCard');
-
-    if (!id || !pw) {
-      err.style.display = 'block';
-      err.textContent = '아이디와 비밀번호를 모두 입력해주세요.';
-      card.classList.add('shake');
-      setTimeout(() => card.classList.remove('shake'), 400);
-      return;
-    }
-
-    // 로딩
-    btn.classList.add('loading');
-    btn.textContent = '로그인 중';
-
-    setTimeout(() => {
-      if (ACCOUNTS[id] && ACCOUNTS[id] === pw) {
-        // 성공 → 대시보드로 이동
-        sessionStorage.setItem('loggedIn', 'true');
-        sessionStorage.setItem('user', id);
-        window.location.href = 'baemin_dashboard.html';
-      } else {
-        btn.classList.remove('loading');
-        btn.textContent = '로그인';
-        err.style.display = 'block';
-        err.textContent = '아이디 또는 비밀번호가 올바르지 않습니다.';
-        card.classList.add('shake');
-        setTimeout(() => card.classList.remove('shake'), 400);
-      }
-    }, 800);
-  }
-
-  // 엔터키 로그인
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-
-  // 이미 로그인 상태면 바로 이동
-  if (sessionStorage.getItem('loggedIn') === 'true') {
-    window.location.href = 'baemin_dashboard.html';
-  }
-</script>
-</body>
-</html>
+  @keyframes spin { to { transform: rotate(360
